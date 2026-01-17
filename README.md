@@ -30,7 +30,7 @@ real-estate-project/
 
 1. Navigate to the `backend/` directory to set up the API servers
 2. Navigate to the `frontend/` directory to set up the web application
-3. Check the `docs/` directory for detailed documentation
+3. Check the `docs/` directory for detailed documentations
 
 ## Security Features
 
