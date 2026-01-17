@@ -5,7 +5,7 @@
 ## Features
 
 ### 🏡 Property Management
-- **Sellers/Agents** can list apartments, houses, land, and commercial properties for sale
+- **Sellers/Agents** can list apartments, houses, land, an
 - **Landlords** can list properties for rent
 - Upload multiple property images
 - Detailed property information (bedrooms, bathrooms, area, amenities)
