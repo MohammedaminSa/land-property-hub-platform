@@ -1,6 +1,6 @@
-# Property Listing Platform
+# 🏡 PropertyHub - Modern Property Listing Platform
 
-A full-stack web application for property listings and inquiries where sellers, agents, landlords can list properties and buyers, tenants can search and contact them.
+[![License: MIT](https://img.shields.io/badge/Licenand inquiries where sellers, agents, landlords can list properties and buyers, tenants can search and contact them.
 
 ## Features
 
