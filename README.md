@@ -28,7 +28,7 @@ real-estate-project/
 
 ## Getting Started
 
-1. Navigate to the `backend/` directory to set up the API server
+1. Navigate to the `backend/` directory to set up the API servers
 2. Navigate to the `frontend/` directory to set up the web application
 3. Check the `docs/` directory for detailed documentation
 
