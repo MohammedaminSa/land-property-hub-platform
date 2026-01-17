@@ -1,30 +1,22 @@
 {
-  "name": "property-platform",
+  "name": "property-hub-platform",
   "version": "1.0.0",
-  "description": "Property listing and inquiry platform",
-  "main": "server.js",
+  "description": "Full-stack property listing and inquiry platform",
   "scripts": {
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "nodemon server.js",
-    "client": "cd client && npm start",
-    "build": "cd client && npm run build",
-    "start": "node server.js",
-    "install-client": "cd client && npm install",
-    "heroku-postbuild": "npm run install-client && npm run build",
-    "test-setup": "node test-setup.js"
-  },
-  "dependencies": {
-    "express": "^4.18.2",
-    "mongoose": "^7.5.0",
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "multer": "^2.0.0-rc.4",
-    "bcryptjs": "^2.4.3",
-    "jsonwebtoken": "^9.0.2",
-    "nodemailer": "^6.9.4"
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "backend": "cd backend && npm run dev",
+    "frontend": "cd frontend && npm start",
+    "build": "cd frontend && npm run build",
+    "install-backend": "cd backend && npm install",
+    "install-frontend": "cd frontend && npm install",
+    "install-all": "npm run install-backend && npm run install-frontend",
+    "start": "cd backend && npm start"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1",
     "concurrently": "^8.2.0"
-  }
+  },
+  "workspaces": [
+    "backend",
+    "frontend"
+  ]
 }
