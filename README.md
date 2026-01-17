@@ -22,7 +22,7 @@ real-estate-project/
 
 ## User Roles
 
-- **Buyer/Tenant**: Browse and inquire about properties
+- **Buyer/Tenant**: Browse and inquire about properties of the website
 - **Seller/Landlord/Agent**: List and manage properties
 - **Admin**: Verify users and approve listings
 
