@@ -31,11 +31,17 @@ mongoose.connect(process.env.MONGODB_URI)
   .catch(err => console.error('MongoDB connection error:', err));
 
 // Routes
+console.log('Loading routes...');
 app.use('/api/auth', require('./routes/auth'));
+console.log('Auth routes loaded');
 app.use('/api/users', require('./routes/users'));
+console.log('Users routes loaded');
 app.use('/api/properties', require('./routes/properties'));
+console.log('Properties routes loaded');
 app.use('/api/inquiries', require('./routes/inquiries'));
+console.log('Inquiries routes loaded');
 app.use('/api/admin', require('./routes/admin'));
+console.log('Admin routes loaded');
 
 // Health check
 app.get('/api/health', (req, res) => {
