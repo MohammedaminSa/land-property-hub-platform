@@ -154,7 +154,7 @@ router.post('/login', [
 // @route   GET /api/auth/me
 // @desc    Get current user
 // @access  Private
-router.get('/me', require('../middleware/auth'), async (req, res) => {
+router.get('/me', require('../middleware/auth').protect, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
     
