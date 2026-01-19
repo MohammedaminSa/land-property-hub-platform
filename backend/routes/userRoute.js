@@ -2,7 +2,6 @@ const express = require('express');
 const { protect } = require('../middleware/auth');
 const router = express.Router();
 
-// Placeholder for user routes
 // @route   GET /api/users/profile
 // @desc    Get user profile
 // @access  Private

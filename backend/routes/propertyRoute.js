@@ -1,6 +1,6 @@
 const express = require('express');
 const { body, validationResult, query } = require('express-validator');
-const Property = require('../models/Property');
+const Property = require('../models/propertyModel');
 const { protect, authorize, requireApproved } = require('../middleware/auth');
 const router = express.Router();
 

@@ -32,15 +32,15 @@ mongoose.connect(process.env.MONGODB_URI)
 
 // Routes
 console.log('Loading routes...');
-app.use('/api/auth', require('./routes/auth'));
+app.use('/api/auth', require('./routes/authRoute'));
 console.log('Auth routes loaded');
-app.use('/api/users', require('./routes/users'));
+app.use('/api/users', require('./routes/userRoute'));
 console.log('Users routes loaded');
-app.use('/api/properties', require('./routes/properties'));
+app.use('/api/properties', require('./routes/propertyRoute'));
 console.log('Properties routes loaded');
-app.use('/api/inquiries', require('./routes/inquiries'));
+app.use('/api/inquiries', require('./routes/inquiryRoute'));
 console.log('Inquiries routes loaded');
-app.use('/api/admin', require('./routes/admin'));
+app.use('/api/admin', require('./routes/adminRoute'));
 console.log('Admin routes loaded');
 
 // Health check
