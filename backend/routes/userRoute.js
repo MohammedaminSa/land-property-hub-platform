@@ -1,12 +1,16 @@
 const express = require('express');
-const { protect } = require('../middleware/auth');
-const { getUserProfile } = require('../controllers/userController');
-
 const router = express.Router();
 
-// @route   GET /api/users/profile
-// @desc    Get user profile
-// @access  Private
-router.get('/profile', protect, getUserProfile);
+// Middleware
+const { protect } = require('../middleware/auth');
+
+// Controllers
+const { getUserProfile } = require('../controllers/userController');
+
+// All routes are protected
+router.use(protect);
+
+// Routes
+router.get('/profile', getUserProfile);
 
 module.exports = router;

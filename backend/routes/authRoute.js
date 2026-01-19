@@ -1,28 +1,18 @@
 const express = require('express');
-const { body } = require('express-validator');
-const { protect } = require('../middleware/auth');
-const {
-  registerUser,
-  loginUser,
-  getCurrentUser
-} = require('../controllers/authController');
-
 const router = express.Router();
 
-// @route   POST /api/auth/register
-// @desc    Register a new user
-// @access  Public
-router.post('/signup', authController.signup);
+// Middleware
+const { protect } = require('../middleware/auth');
 
-// @route   POST /api/auth/login
-// @desc    Login user
-// @access  Public
-router.post('/login', authController.login);
+// Validators
+const { registerValidation, loginValidation } = require('../validators/authValidator');
 
-// @route   GET /api/auth/me
-// @desc    Get current user
-// @access  Private
-router.use(authController.protect);
-router.route('/me').get(userControllers.getMe, userControllers.getUser);
+// Controllers
+const { registerUser, loginUser, getCurrentUser } = require('../controllers/authController');
+
+// Routes
+router.post('/register', registerValidation, registerUser);
+router.post('/login', loginValidation, loginUser);
+router.get('/me', protect, getCurrentUser);
 
 module.exports = router;
