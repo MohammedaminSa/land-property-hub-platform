@@ -1,7 +1,7 @@
 const { body } = require('express-validator');
 
 // Validation rules for creating an inquiry
-const createInquiryValidation = [
+exports.createInquiryValidation = [
   body('property')
     .isMongoId()
     .withMessage('Valid property ID is required'),
@@ -18,14 +18,9 @@ const createInquiryValidation = [
 ];
 
 // Validation rules for responding to an inquiry
-const respondInquiryValidation = [
+exports.respondInquiryValidation = [
   body('message')
     .trim()
     .isLength({ min: 10, max: 500 })
     .withMessage('Response must be between 10 and 500 characters')
 ];
-
-module.exports = {
-  createInquiryValidation,
-  respondInquiryValidation
-};

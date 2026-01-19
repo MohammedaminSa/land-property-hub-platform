@@ -15,7 +15,7 @@ const generateToken = (id) => {
 // @desc    Register a new user
 // @route   POST /api/auth/register
 // @access  Public
-const registerUser = asyncHandler(async (req, res, next) => {
+exports.registerUser = asyncHandler(async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({
@@ -69,7 +69,7 @@ const registerUser = asyncHandler(async (req, res, next) => {
 // @desc    Login user
 // @route   POST /api/auth/login
 // @access  Public
-const loginUser = asyncHandler(async (req, res, next) => {
+exports.loginUser = asyncHandler(async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({
@@ -118,7 +118,7 @@ const loginUser = asyncHandler(async (req, res, next) => {
 // @desc    Get current user
 // @route   GET /api/auth/me
 // @access  Private
-const getCurrentUser = asyncHandler(async (req, res, next) => {
+exports.getCurrentUser = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id);
   
   if (!user) {

@@ -1,7 +1,7 @@
 const { body, query } = require('express-validator');
 
 // Validation rules for getting properties with filters
-const getPropertiesValidation = [
+exports.getPropertiesValidation = [
   query('page')
     .optional()
     .isInt({ min: 1 })
@@ -24,7 +24,7 @@ const getPropertiesValidation = [
 ];
 
 // Validation rules for creating a property
-const createPropertyValidation = [
+exports.createPropertyValidation = [
   body('title')
     .trim()
     .isLength({ min: 5, max: 100 })
@@ -57,8 +57,3 @@ const createPropertyValidation = [
     .notEmpty()
     .withMessage('Subcity is required')
 ];
-
-module.exports = {
-  getPropertiesValidation,
-  createPropertyValidation
-};
