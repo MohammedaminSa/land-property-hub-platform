@@ -141,9 +141,3 @@ exports.getCurrentUser = asyncHandler(async (req, res, next) => {
     }
   });
 });
-
-module.exports = {
-  registerUser,
-  loginUser,
-  getCurrentUser
-};

@@ -7,7 +7,7 @@ const ERROR_MESSAGES = require('../utils/errorMessages');
 // @desc    Get all approved properties with filtering
 // @route   GET /api/properties
 // @access  Public
-const getProperties = asyncHandler(async (req, res, next) => {
+exports.getProperties = asyncHandler(async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({
@@ -76,7 +76,7 @@ const getProperties = asyncHandler(async (req, res, next) => {
 // @desc    Get single property by ID
 // @route   GET /api/properties/:id
 // @access  Public
-const getPropertyById = asyncHandler(async (req, res, next) => {
+exports.getPropertyById = asyncHandler(async (req, res, next) => {
   const property = await Property.findById(req.params.id)
     .populate('owner', 'firstName lastName phone email profileImage');
 
@@ -97,7 +97,7 @@ const getPropertyById = asyncHandler(async (req, res, next) => {
 // @desc    Create new property
 // @route   POST /api/properties
 // @access  Private (Seller, Landlord, Agent)
-const createProperty = asyncHandler(async (req, res, next) => {
+exports.createProperty = asyncHandler(async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({
@@ -124,7 +124,7 @@ const createProperty = asyncHandler(async (req, res, next) => {
 // @desc    Get current user's properties
 // @route   GET /api/properties/my/listings
 // @access  Private
-const getMyProperties = asyncHandler(async (req, res, next) => {
+exports.getMyProperties = asyncHandler(async (req, res, next) => {
   const properties = await Property.find({ owner: req.user.id })
     .sort({ createdAt: -1 });
 
