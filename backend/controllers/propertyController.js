@@ -134,10 +134,3 @@ exports.getMyProperties = asyncHandler(async (req, res, next) => {
     data: properties
   });
 });
-
-module.exports = {
-  getProperties,
-  getPropertyById,
-  createProperty,
-  getMyProperties
-};

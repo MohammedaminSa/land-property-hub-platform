@@ -8,7 +8,7 @@ const ERROR_MESSAGES = require('../utils/errorMessages');
 // @desc    Create new inquiry
 // @route   POST /api/inquiries
 // @access  Private
-const createInquiry = asyncHandler(async (req, res, next) => {
+exports.createInquiry = asyncHandler(async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({
@@ -58,7 +58,7 @@ const createInquiry = asyncHandler(async (req, res, next) => {
 // @desc    Get inquiries received by current user
 // @route   GET /api/inquiries/received
 // @access  Private
-const getReceivedInquiries = asyncHandler(async (req, res, next) => {
+exports.getReceivedInquiries = asyncHandler(async (req, res, next) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
   const skip = (page - 1) * limit;
@@ -92,7 +92,7 @@ const getReceivedInquiries = asyncHandler(async (req, res, next) => {
 // @desc    Get inquiries sent by current user
 // @route   GET /api/inquiries/sent
 // @access  Private
-const getSentInquiries = asyncHandler(async (req, res, next) => {
+exports.getSentInquiries = asyncHandler(async (req, res, next) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
   const skip = (page - 1) * limit;
@@ -121,7 +121,7 @@ const getSentInquiries = asyncHandler(async (req, res, next) => {
 // @desc    Respond to an inquiry
 // @route   PUT /api/inquiries/:id/respond
 // @access  Private
-const respondToInquiry = asyncHandler(async (req, res, next) => {
+exports.respondToInquiry = asyncHandler(async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({
