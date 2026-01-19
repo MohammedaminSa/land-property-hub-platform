@@ -157,10 +157,3 @@ exports.respondToInquiry = asyncHandler(async (req, res, next) => {
     data: inquiry
   });
 });
-
-module.exports = {
-  createInquiry,
-  getReceivedInquiries,
-  getSentInquiries,
-  respondToInquiry
-};

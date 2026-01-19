@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const User = require('../models/userModel');
 
 // Protect routes - verify JWT token
-const protect = async (req, res, next) => {
+exports.protect = async (req, res, next) => {
   let token;
 
   // Check for token in header
@@ -43,7 +43,7 @@ const protect = async (req, res, next) => {
 };
 
 // Authorize specific roles
-const authorize = (...roles) => {
+exports.authorize = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
       return res.status(403).json({
@@ -56,7 +56,7 @@ const authorize = (...roles) => {
 };
 
 // Check if user is verified
-const requireVerified = (req, res, next) => {
+exports.requireVerified = (req, res, next) => {
   if (!req.user.isVerified) {
     return res.status(403).json({
       success: false,
@@ -67,7 +67,7 @@ const requireVerified = (req, res, next) => {
 };
 
 // Check if user is approved (for sellers, landlords, agents)
-const requireApproved = (req, res, next) => {
+exports.requireApproved = (req, res, next) => {
   if (['seller', 'landlord', 'agent'].includes(req.user.role) && !req.user.isApproved) {
     return res.status(403).json({
       success: false,
@@ -75,11 +75,4 @@ const requireApproved = (req, res, next) => {
     });
   }
   next();
-};
-
-module.exports = {
-  protect,
-  authorize,
-  requireVerified,
-  requireApproved
 };

@@ -1,13 +1,9 @@
 // @desc    Get admin dashboard data
 // @route   GET /api/admin/dashboard
 // @access  Private (Admin only)
-const getAdminDashboard = async (req, res) => {
+exports.getAdminDashboard = async (req, res) => {
   res.json({
     success: true,
     message: 'Admin dashboard endpoint - to be implemented'
   });
-};
-
-module.exports = {
-  getAdminDashboard
 };
