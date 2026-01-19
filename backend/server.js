@@ -52,23 +52,16 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ 
-    success: false, 
-    message: 'Something went wrong!',
-    error: process.env.NODE_ENV === 'development' ? err.message : {}
-  });
+// 404 handler - must be before error handler
+app.use('*', (req, res, next) => {
+  const error = new Error(`Route not found - ${req.originalUrl}`);
+  error.statusCode = 404;
+  next(error);
 });
 
-// 404 handler
-app.use('*', (req, res) => {
-  res.status(404).json({ 
-    success: false, 
-    message: 'Route not found' 
-  });
-});
+// Error handling middleware - must be last
+const errorHandler = require('./middleware/errorHandler');
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
