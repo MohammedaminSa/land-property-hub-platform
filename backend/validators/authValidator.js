@@ -1,7 +1,7 @@
 const { body } = require('express-validator');
 
 // Validation rules for user registration
-const registerValidation = [
+exports.registerValidation = [
   body('firstName')
     .trim()
     .isLength({ min: 2 })
@@ -30,7 +30,7 @@ const registerValidation = [
 ];
 
 // Validation rules for user login
-const loginValidation = [
+exports.loginValidation = [
   body('email')
     .isEmail()
     .withMessage('Please enter a valid email'),
@@ -40,7 +40,3 @@ const loginValidation = [
     .withMessage('Password is required')
 ];
 
-module.exports = {
-  registerValidation,
-  loginValidation
-};
