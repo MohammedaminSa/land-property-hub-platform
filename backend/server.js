@@ -30,18 +30,7 @@ mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('MongoDB connected successfully'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-// Routes
-console.log('Loading routes...');
-app.use('/api/auth', require('./routes/authRoute'));
-console.log('Auth routes loaded');
-app.use('/api/users', require('./routes/userRoute'));
-console.log('Users routes loaded');
-app.use('/api/properties', require('./routes/propertyRoute'));
-console.log('Properties routes loaded');
-app.use('/api/inquiries', require('./routes/inquiryRoute'));
-console.log('Inquiries routes loaded');
-app.use('/api/admin', require('./routes/adminRoute'));
-console.log('Admin routes loaded');
+
 
 // Health check
 app.get('/api/health', (req, res) => {
