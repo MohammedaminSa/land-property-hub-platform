@@ -74,6 +74,9 @@ uploads/
 *.doc
 *.docx
 
+# But keep the .gitkeep files
+!uploads/**/.gitkeep
+
 # Database
 *.sqlite
 *.db
