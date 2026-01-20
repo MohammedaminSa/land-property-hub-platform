@@ -134,3 +134,93 @@ exports.getMyProperties = asyncHandler(async (req, res, next) => {
     data: properties
   });
 });
+
+// @desc    Update property
+// @route   PUT /api/properties/:id
+// @access  Private (Owner only)
+exports.updateProperty = asyncHandler(async (req, res, next) => {
+  let property = await Property.findById(req.params.id);
+
+  if (!property) {
+    return next(new ErrorResponse(ERROR_MESSAGES.PROPERTY.NOT_FOUND, 404));
+  }
+
+  // Check if user is the owner
+  if (property.owner.toString() !== req.user.id) {
+    return next(new ErrorResponse(ERROR_MESSAGES.PROPERTY.NOT_OWNER, 403));
+  }
+
+  // Update property
+  property = await Property.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {
+      new: true,
+      runValidators: true
+    }
+  );
+
+  res.json({
+    success: true,
+    message: 'Property updated successfully',
+    data: property
+  });
+});
+
+// @desc    Delete property
+// @route   DELETE /api/properties/:id
+// @access  Private (Owner only)
+exports.deleteProperty = asyncHandler(async (req, res, next) => {
+  const property = await Property.findById(req.params.id);
+
+  if (!property) {
+    return next(new ErrorResponse(ERROR_MESSAGES.PROPERTY.NOT_FOUND, 404));
+  }
+
+  // Check if user is the owner
+  if (property.owner.toString() !== req.user.id) {
+    return next(new ErrorResponse(ERROR_MESSAGES.PROPERTY.NOT_OWNER, 403));
+  }
+
+  await property.deleteOne();
+
+  res.json({
+    success: true,
+    message: 'Property deleted successfully'
+  });
+});
+
+// @desc    Upload property images
+// @route   POST /api/properties/:id/images
+// @access  Private (Owner only)
+exports.uploadPropertyImages = asyncHandler(async (req, res, next) => {
+  const property = await Property.findById(req.params.id);
+
+  if (!property) {
+    return next(new ErrorResponse(ERROR_MESSAGES.PROPERTY.NOT_FOUND, 404));
+  }
+
+  // Check if user is the owner
+  if (property.owner.toString() !== req.user.id) {
+    return next(new ErrorResponse(ERROR_MESSAGES.PROPERTY.NOT_OWNER, 403));
+  }
+
+  if (!req.files || req.files.length === 0) {
+    return next(new ErrorResponse(ERROR_MESSAGES.FILE.NO_FILE, 400));
+  }
+
+  // Add images to property
+  const images = req.files.map((file, index) => ({
+    filename: file.filename,
+    isPrimary: index === 0 && property.images.length === 0
+  }));
+
+  property.images.push(...images);
+  await property.save();
+
+  res.json({
+    success: true,
+    message: 'Images uploaded successfully',
+    data: property
+  });
+});
