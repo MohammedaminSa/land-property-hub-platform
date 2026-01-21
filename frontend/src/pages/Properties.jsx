@@ -1,0 +1,169 @@
+import { useState, useEffect } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
+import api from '../services/api'
+import toast from 'react-hot-toast'
+
+const Properties = () => {
+  const [properties, setProperties] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [searchParams, setSearchParams] = useSearchParams()
+  
+  const [filters, setFilters] = useState({
+    category: searchParams.get('category') || '',
+    city: searchParams.get('city') || '',
+    minPrice: searchParams.get('minPrice') || '',
+    maxPrice: searchParams.get('maxPrice') || '',
+    page: searchParams.get('page') || 1
+  })
+
+  useEffect(() => {
+    fetchProperties()
+  }, [filters])
+
+  const fetchProperties = async () => {
+    try {
+      setLoading(true)
+      const params = new URLSearchParams()
+      Object.keys(filters).forEach(key => {
+        if (filters[key]) params.append(key, filters[key])
+      })
+      
+      const { data } = await api.get(`/properties?${params}`)
+      setProperties(data.data)
+    } catch (error) {
+      toast.error('Failed to fetch properties')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleFilterChange = (key, value) => {
+    const newFilters = { ...filters, [key]: value, page: 1 }
+    setFilters(newFilters)
+    setSearchParams(newFilters)
+  }
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-8">Browse Properties</h1>
+
+      {/* Filters */}
+      <div className="card mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div>
+            <label className="block text-sm font-medium mb-2">Category</label>
+            <select
+              className="input"
+              value={filters.category}
+              onChange={(e) => handleFilterChange('category', e.target.value)}
+            >
+              <option value="">All Categories</option>
+              <option value="residential_land">Residential Land</option>
+              <option value="apartment_sale">Apartments for Sale</option>
+              <option value="house_rent">Houses for Rent</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2">City</label>
+            <input
+              type="text"
+              className="input"
+              placeholder="e.g., Addis Ababa"
+              value={filters.city}
+              onChange={(e) => handleFilterChange('city', e.target.value)}
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2">Min Price (ETB)</label>
+            <input
+              type="number"
+              className="input"
+              placeholder="0"
+              value={filters.minPrice}
+              onChange={(e) => handleFilterChange('minPrice', e.target.value)}
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2">Max Price (ETB)</label>
+            <input
+              type="number"
+              className="input"
+              placeholder="1000000"
+              value={filters.maxPrice}
+              onChange={(e) => handleFilterChange('maxPrice', e.target.value)}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Properties Grid */}
+      {loading ? (
+        <div className="text-center py-12">
+          <div className="text-xl">Loading properties...</div>
+        </div>
+      ) : properties.length === 0 ? (
+        <div className="text-center py-12">
+          <div className="text-xl text-gray-600">No properties found</div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {properties.map((property) => (
+            <Link
+              key={property._id}
+              to={`/properties/${property._id}`}
+              className="card hover:shadow-xl transition-shadow"
+            >
+              <div className="aspect-video bg-gray-200 rounded-lg mb-4 overflow-hidden">
+                {property.images?.[0] ? (
+                  <img
+                    src={`/uploads/properties/${property.images[0].filename}`}
+                    alt={property.title}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-gray-400">
+                    No Image
+                  </div>
+                )}
+              </div>
+              
+              <h3 className="text-xl font-semibold mb-2">{property.title}</h3>
+              
+              <div className="flex items-center text-gray-600 mb-2">
+                <span className="text-2xl font-bold text-primary-600">
+                  {property.price.toLocaleString()} {property.currency}
+                </span>
+              </div>
+              
+              <div className="flex items-center text-gray-600 mb-2">
+                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                {property.location.city}, {property.location.subcity}
+              </div>
+              
+              <div className="flex items-center text-gray-600">
+                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                </svg>
+                {property.area.size} {property.area.unit}
+              </div>
+              
+              {property.features?.bedrooms && (
+                <div className="mt-2 text-sm text-gray-600">
+                  🛏️ {property.features.bedrooms} Beds • 🚿 {property.features.bathrooms} Baths
+                </div>
+              )}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default Properties
