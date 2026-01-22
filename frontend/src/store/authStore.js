@@ -46,6 +46,11 @@ const useAuthStore = create((set) => ({
     toast.success('Logged out successfully');
   },
 
+  setUser: (user) => {
+    localStorage.setItem('user', JSON.stringify(user));
+    set({ user });
+  },
+
   updateUser: (user) => {
     localStorage.setItem('user', JSON.stringify(user));
     set({ user });
