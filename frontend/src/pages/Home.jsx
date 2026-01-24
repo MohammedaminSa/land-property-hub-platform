@@ -18,6 +18,7 @@ const Home = () => {
     })
     navigate(`/properties?${params.toString()}`)
   }
+
   return (
     <div>
       {/* Hero Section */}
