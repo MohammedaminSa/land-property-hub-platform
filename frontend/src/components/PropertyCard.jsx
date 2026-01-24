@@ -4,7 +4,7 @@ const PropertyCard = ({ property }) => {
   return (
     <Link
       to={`/properties/${property._id}`}
-      className="property-card animate-fade-in"
+      className="property-card group animate-fade-in"
     >
       {/* Image Container */}
       <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
