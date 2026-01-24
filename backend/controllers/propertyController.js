@@ -18,16 +18,23 @@ exports.getProperties = asyncHandler(async (req, res, next) => {
   }
 
   const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 10;
+  const limit = parseInt(req.query.limit) || 12;
   const skip = (page - 1) * limit;
 
   // Build filter object
   const filter = { status: 'approved', isActive: true };
 
+  // Category filter
   if (req.query.category) {
     filter.category = req.query.category;
   }
 
+  // Property type filter
+  if (req.query.type) {
+    filter.type = req.query.type;
+  }
+
+  // Location filters
   if (req.query.city) {
     filter['location.city'] = new RegExp(req.query.city, 'i');
   }
@@ -36,12 +43,48 @@ exports.getProperties = asyncHandler(async (req, res, next) => {
     filter['location.subcity'] = new RegExp(req.query.subcity, 'i');
   }
 
+  // Price range filter
   if (req.query.minPrice || req.query.maxPrice) {
     filter.price = {};
     if (req.query.minPrice) filter.price.$gte = parseFloat(req.query.minPrice);
     if (req.query.maxPrice) filter.price.$lte = parseFloat(req.query.maxPrice);
   }
 
+  // Area size filter
+  if (req.query.minArea || req.query.maxArea) {
+    filter['area.size'] = {};
+    if (req.query.minArea) filter['area.size'].$gte = parseFloat(req.query.minArea);
+    if (req.query.maxArea) filter['area.size'].$lte = parseFloat(req.query.maxArea);
+  }
+
+  // Bedrooms filter
+  if (req.query.bedrooms) {
+    filter['features.bedrooms'] = parseInt(req.query.bedrooms);
+  }
+
+  // Bathrooms filter
+  if (req.query.bathrooms) {
+    filter['features.bathrooms'] = parseInt(req.query.bathrooms);
+  }
+
+  // Features filters
+  if (req.query.parking === 'true') {
+    filter['features.parking'] = true;
+  }
+
+  if (req.query.furnished === 'true') {
+    filter['features.furnished'] = true;
+  }
+
+  if (req.query.garden === 'true') {
+    filter['features.garden'] = true;
+  }
+
+  if (req.query.security === 'true') {
+    filter['features.security'] = true;
+  }
+
+  // Text search
   if (req.query.search) {
     filter.$text = { $search: req.query.search };
   }
@@ -50,6 +93,9 @@ exports.getProperties = asyncHandler(async (req, res, next) => {
   let sort = { createdAt: -1 };
   if (req.query.sortBy === 'price_asc') sort = { price: 1 };
   if (req.query.sortBy === 'price_desc') sort = { price: -1 };
+  if (req.query.sortBy === 'area_asc') sort = { 'area.size': 1 };
+  if (req.query.sortBy === 'area_desc') sort = { 'area.size': -1 };
+  if (req.query.sortBy === 'views') sort = { views: -1 };
 
   const properties = await Property.find(filter)
     .populate('owner', 'firstName lastName phone email')
@@ -65,6 +111,7 @@ exports.getProperties = asyncHandler(async (req, res, next) => {
     total,
     pagination: {
       page,
+      limit,
       pages: Math.ceil(total / limit),
       hasNext: page < Math.ceil(total / limit),
       hasPrev: page > 1
