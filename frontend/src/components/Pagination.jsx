@@ -19,13 +19,15 @@ const Pagination = ({ pagination, onPageChange }) => {
   }
 
   return (
-    <div className="flex justify-center items-center gap-2 mt-8">
+    <div className="flex justify-center items-center gap-3 mt-12 animate-fade-in">
       <button
         onClick={() => onPageChange(pagination.page - 1)}
         disabled={!pagination.hasPrev}
-        className="btn btn-outline disabled:opacity-50 disabled:cursor-not-allowed"
+        className="btn btn-secondary btn-sm disabled:opacity-40"
       >
-        Previous
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        </svg>
       </button>
       
       <div className="flex gap-2">
@@ -33,11 +35,13 @@ const Pagination = ({ pagination, onPageChange }) => {
           <>
             <button
               onClick={() => onPageChange(1)}
-              className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300"
+              className="px-4 py-2 rounded-xl font-semibold bg-white border-2 border-gray-200 hover:border-primary-300 hover:bg-primary-50 transition-all"
             >
               1
             </button>
-            {pagination.page > 4 && <span className="px-2 py-2">...</span>}
+            {pagination.page > 4 && (
+              <span className="px-2 py-2 text-gray-400">...</span>
+            )}
           </>
         )}
 
@@ -45,10 +49,10 @@ const Pagination = ({ pagination, onPageChange }) => {
           <button
             key={pageNum}
             onClick={() => onPageChange(pageNum)}
-            className={`px-4 py-2 rounded ${
+            className={`px-4 py-2 rounded-xl font-semibold transition-all ${
               pagination.page === pageNum
-                ? 'bg-primary-600 text-white'
-                : 'bg-gray-200 hover:bg-gray-300'
+                ? 'bg-gradient-to-r from-primary-600 to-primary-700 text-white shadow-lg shadow-primary-500/30'
+                : 'bg-white border-2 border-gray-200 hover:border-primary-300 hover:bg-primary-50'
             }`}
           >
             {pageNum}
@@ -57,10 +61,12 @@ const Pagination = ({ pagination, onPageChange }) => {
 
         {pagination.page < pagination.pages - 2 && (
           <>
-            {pagination.page < pagination.pages - 3 && <span className="px-2 py-2">...</span>}
+            {pagination.page < pagination.pages - 3 && (
+              <span className="px-2 py-2 text-gray-400">...</span>
+            )}
             <button
               onClick={() => onPageChange(pagination.pages)}
-              className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300"
+              className="px-4 py-2 rounded-xl font-semibold bg-white border-2 border-gray-200 hover:border-primary-300 hover:bg-primary-50 transition-all"
             >
               {pagination.pages}
             </button>
@@ -71,9 +77,11 @@ const Pagination = ({ pagination, onPageChange }) => {
       <button
         onClick={() => onPageChange(pagination.page + 1)}
         disabled={!pagination.hasNext}
-        className="btn btn-outline disabled:opacity-50 disabled:cursor-not-allowed"
+        className="btn btn-secondary btn-sm disabled:opacity-40"
       >
-        Next
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        </svg>
       </button>
     </div>
   )
