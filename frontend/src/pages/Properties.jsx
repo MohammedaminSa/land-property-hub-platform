@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import api from '../services/api'
 import toast from 'react-hot-toast'
+import SearchFilter from '../components/SearchFilter'
+import PropertyCard from '../components/PropertyCard'
+import Pagination from '../components/Pagination'
 
 const Properties = () => {
   const [properties, setProperties] = useState([])
