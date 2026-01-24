@@ -1,6 +1,23 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 
 const Home = () => {
+  const navigate = useNavigate()
+  const [quickSearch, setQuickSearch] = useState({
+    category: '',
+    city: '',
+    minPrice: '',
+    maxPrice: ''
+  })
+
+  const handleQuickSearch = (e) => {
+    e.preventDefault()
+    const params = new URLSearchParams()
+    Object.keys(quickSearch).forEach(key => {
+      if (quickSearch[key]) params.append(key, quickSearch[key])
+    })
+    navigate(`/properties?${params.toString()}`)
+  }
   return (
     <div>
       {/* Hero Section */}
@@ -13,9 +30,48 @@ const Home = () => {
             Browse thousands of properties for sale and rent across Ethiopia. 
             Your trusted real estate platform.
           </p>
+
+          {/* Quick Search */}
+          <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6 mb-8">
+            <form onSubmit={handleQuickSearch}>
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <select
+                  className="input text-gray-900"
+                  value={quickSearch.category}
+                  onChange={(e) => setQuickSearch({ ...quickSearch, category: e.target.value })}
+                >
+                  <option value="">All Categories</option>
+                  <option value="residential_land">Residential Land</option>
+                  <option value="apartment_sale">Apartments for Sale</option>
+                  <option value="house_rent">Houses for Rent</option>
+                </select>
+
+                <input
+                  type="text"
+                  className="input text-gray-900"
+                  placeholder="City (e.g., Addis Ababa)"
+                  value={quickSearch.city}
+                  onChange={(e) => setQuickSearch({ ...quickSearch, city: e.target.value })}
+                />
+
+                <input
+                  type="number"
+                  className="input text-gray-900"
+                  placeholder="Min Price (ETB)"
+                  value={quickSearch.minPrice}
+                  onChange={(e) => setQuickSearch({ ...quickSearch, minPrice: e.target.value })}
+                />
+
+                <button type="submit" className="btn bg-primary-600 text-white hover:bg-primary-700">
+                  Search Properties
+                </button>
+              </div>
+            </form>
+          </div>
+
           <div className="flex justify-center gap-4">
             <Link to="/properties" className="bg-white text-primary-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100">
-              Browse Properties
+              Browse All Properties
             </Link>
             <Link to="/register" className="border-2 border-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary-600">
               List Your Property
