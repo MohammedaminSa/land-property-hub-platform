@@ -7,6 +7,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import CreateProperty from './pages/CreateProperty'
+import AdminLayout from './pages/admin/AdminLayout'
 import PrivateRoute from './components/PrivateRoute'
 
 function App() {
@@ -28,6 +29,13 @@ function App() {
         <Route path="properties/new" element={
           <PrivateRoute>
             <CreateProperty />
+          </PrivateRoute>
+        } />
+        
+        {/* Admin Routes */}
+        <Route path="admin/*" element={
+          <PrivateRoute>
+            <AdminLayout />
           </PrivateRoute>
         } />
       </Route>
