@@ -9,7 +9,16 @@ const User = require('../models/userModel');
 
 const createAdmin = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI);
+    // Support both MONGO_URI and MONGODB_URI
+    const mongoUri = process.env.MONGO_URI || process.env.MONGODB_URI;
+    
+    if (!mongoUri) {
+      console.error('Error: MongoDB URI not found in .env file');
+      console.log('Please add MONGODB_URI to your .env file');
+      process.exit(1);
+    }
+
+    await mongoose.connect(mongoUri);
     console.log('Connected to MongoDB');
 
     // Check if admin already exists
