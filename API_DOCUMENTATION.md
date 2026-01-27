@@ -1,6 +1,6 @@
 # Ethiopian Real Estate - API Documentation
 
-## Base URL
+# Base URL
 ```
 Development: http://localhost:5000/api
 Production: https://your-domain.com/api
