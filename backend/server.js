@@ -38,6 +38,9 @@ const connectDB = async () => {
 // Connect to Database
 connectDB();
 
+// Routes
+app.use('/api/auth', require('./routes/authRoute'));
+
 // Health Check Route
 app.get('/api/health', (req, res) => {
   res.json({
