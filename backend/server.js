@@ -40,6 +40,7 @@ connectDB();
 
 // Routes
 app.use('/api/auth', require('./routes/authRoute'));
+app.use('/api/properties', require('./routes/propertyRoute'));
 
 // Health Check Route
 app.get('/api/health', (req, res) => {
