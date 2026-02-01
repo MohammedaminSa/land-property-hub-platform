@@ -132,6 +132,14 @@ exports.getProperty = async (req, res) => {
       });
     }
 
+    // Check if property is approved and active (for public access)
+    if (property.status !== 'approved' || !property.isActive) {
+      return res.status(404).json({
+        success: false,
+        message: 'Property not found'
+      });
+    }
+
     // Increment views
     property.views += 1;
     await property.save();
