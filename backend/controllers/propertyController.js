@@ -280,3 +280,58 @@ exports.getMyProperties = async (req, res) => {
     });
   }
 };
+
+// @desc    Upload property images
+// @route   POST /api/properties/:id/images
+// @access  Private (Property owner)
+exports.uploadImages = async (req, res) => {
+  try {
+    const property = await Property.findById(req.params.id);
+
+    if (!property) {
+      return res.status(404).json({
+        success: false,
+        message: 'Property not found'
+      });
+    }
+
+    // Check ownership
+    if (property.owner.toString() !== req.user.id) {
+      return res.status(403).json({
+        success: false,
+        message: 'Not authorized to upload images for this property'
+      });
+    }
+
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please upload at least one image'
+      });
+    }
+
+    // Add images
+    const images = req.files.map((file, index) => ({
+      filename: file.filename,
+      isPrimary: index === 0 && property.images.length === 0  // First image is primary if no images exist
+    }));
+
+    property.images.push(...images);
+    await property.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Images uploaded successfully',
+      data: {
+        _id: property._id,
+        images: property.images
+      }
+    });
+  } catch (error) {
+    console.error('Upload Images Error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error'
+    });
+  }
+};
