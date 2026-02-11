@@ -45,6 +45,7 @@ connectDB();
 app.use('/api/auth', require('./routes/authRoute'));
 app.use('/api/properties', require('./routes/propertyRoute'));
 app.use('/api/inquiries', require('./routes/inquiryRoute'));
+app.use('/api/admin', require('./routes/adminRoute'));
 
 // Health Check Route
 app.get('/api/health', (req, res) => {
