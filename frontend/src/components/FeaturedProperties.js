@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropertyCard from './PropertyCard';
 import property1 from '../assets/property-1.jpg';
 import property2 from '../assets/property-2.jpg';
@@ -9,6 +10,7 @@ import property6 from '../assets/property-6.jpg';
 
 const properties = [
   {
+    id: 'featured-1',
     image: property1,
     title: 'Modern City Apartment',
     location: 'Bole, Addis Ababa',
@@ -19,6 +21,7 @@ const properties = [
     type: 'sale',
   },
   {
+    id: 'featured-2',
     image: property2,
     title: 'Charming Family Home',
     location: 'Kazanchis, Addis Ababa',
@@ -29,6 +32,7 @@ const properties = [
     type: 'sale',
   },
   {
+    id: 'featured-3',
     image: property3,
     title: 'Luxury Condo Tower',
     location: 'CMC, Addis Ababa',
@@ -39,6 +43,7 @@ const properties = [
     type: 'sale',
   },
   {
+    id: 'featured-4',
     image: property4,
     title: 'Cozy Apartment',
     location: 'Megenagna, Addis Ababa',
@@ -49,6 +54,7 @@ const properties = [
     type: 'rent',
   },
   {
+    id: 'featured-5',
     image: property5,
     title: 'Skyline Penthouse',
     location: 'Sarbet, Addis Ababa',
@@ -59,6 +65,7 @@ const properties = [
     type: 'sale',
   },
   {
+    id: 'featured-6',
     image: property6,
     title: 'Mediterranean Villa',
     location: 'Old Airport, Addis Ababa',
@@ -88,8 +95,18 @@ const FeaturedProperties = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {properties.map((property) => (
-            <PropertyCard key={property.title} {...property} />
+            <PropertyCard key={property.id} {...property} />
           ))}
+        </div>
+
+        {/* View All Properties Button */}
+        <div className="text-center mt-12">
+          <Link
+            to="/properties"
+            className="inline-block font-body font-semibold px-8 py-4 bg-secondary text-white rounded-lg hover:bg-secondary/90 transition-colors duration-300 shadow-lg hover:shadow-xl"
+          >
+            View All Properties
+          </Link>
         </div>
       </div>
     </section>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Search, Home, Building } from 'lucide-react';
 import heroBg from '../assets/hero-bg.jpg';
 
@@ -47,9 +48,12 @@ const Hero = () => {
                   <Building className="w-4 h-4 text-gray-600" />
                   <span className="font-body text-sm text-gray-600">Rent</span>
                 </div>
-                <button className="bg-secondary hover:bg-secondary-dark text-white px-8 py-3 rounded-xl font-semibold transition-colors">
+                <Link 
+                  to="/properties"
+                  className="bg-secondary hover:bg-secondary-dark text-white px-8 py-3 rounded-xl font-semibold transition-colors"
+                >
                   Search
-                </button>
+                </Link>
               </div>
             </div>
           </div>

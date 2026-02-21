@@ -1,9 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { MapPin, Bed, Bath, Maximize } from 'lucide-react';
 
-const PropertyCard = ({ image, title, location, price, beds, baths, sqft, type }) => {
-  return (
-    <div className="group bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-500 cursor-pointer">
+const PropertyCard = ({ id, image, title, location, price, beds, baths, sqft, type }) => {
+  const CardContent = () => (
+    <>
       {/* Image */}
       <div className="relative overflow-hidden aspect-[4/3]">
         <img
@@ -57,6 +58,24 @@ const PropertyCard = ({ image, title, location, price, beds, baths, sqft, type }
           </span>
         </div>
       </div>
+    </>
+  );
+
+  // If id is provided, make it a link, otherwise just a div
+  if (id) {
+    return (
+      <Link
+        to={`/properties/${id}`}
+        className="group bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-500 cursor-pointer block"
+      >
+        <CardContent />
+      </Link>
+    );
+  }
+
+  return (
+    <div className="group bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-500 cursor-pointer">
+      <CardContent />
     </div>
   );
 };
