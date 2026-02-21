@@ -9,6 +9,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import PropertiesList from './pages/PropertiesList';
 import PropertyDetails from './pages/PropertyDetails';
+import AddProperty from './pages/AddProperty';
 
 function App() {
   return (
@@ -27,6 +28,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <Dashboard />
+                </PrivateRoute>
+              } 
+            />
+            <Route 
+              path="/add-property" 
+              element={
+                <PrivateRoute>
+                  <AddProperty />
                 </PrivateRoute>
               } 
             />
