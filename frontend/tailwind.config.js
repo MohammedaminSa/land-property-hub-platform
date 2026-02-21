@@ -18,6 +18,20 @@ module.exports = {
           800: '#1e40af',
           900: '#1e3a8a',
         },
+        secondary: {
+          DEFAULT: '#d97706',
+          light: '#f59e0b',
+          dark: '#b45309',
+        },
+      },
+      fontFamily: {
+        display: ['Playfair Display', 'serif'],
+        body: ['Inter', 'sans-serif'],
+      },
+      boxShadow: {
+        'card': '0 4px 24px -4px rgba(0, 0, 0, 0.08)',
+        'card-hover': '0 12px 40px -8px rgba(0, 0, 0, 0.15)',
+        'elevated': '0 20px 60px -12px rgba(0, 0, 0, 0.2)',
       },
     },
   },
