@@ -10,6 +10,7 @@ import Dashboard from './pages/Dashboard';
 import PropertiesList from './pages/PropertiesList';
 import PropertyDetails from './pages/PropertyDetails';
 import AddProperty from './pages/AddProperty';
+import MyProperties from './pages/MyProperties';
 
 function App() {
   return (
@@ -36,6 +37,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <AddProperty />
+                </PrivateRoute>
+              } 
+            />
+            <Route 
+              path="/my-properties" 
+              element={
+                <PrivateRoute>
+                  <MyProperties />
                 </PrivateRoute>
               } 
             />
