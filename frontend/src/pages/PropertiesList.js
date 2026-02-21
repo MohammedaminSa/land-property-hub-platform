@@ -4,6 +4,94 @@ import { getProperties } from '../services/propertyService';
 import PropertyCard from '../components/PropertyCard';
 import PropertyFilters from '../components/PropertyFilters';
 import Pagination from '../components/Pagination';
+import property1 from '../assets/property-1.jpg';
+import property2 from '../assets/property-2.jpg';
+import property3 from '../assets/property-3.jpg';
+import property4 from '../assets/property-4.jpg';
+import property5 from '../assets/property-5.jpg';
+import property6 from '../assets/property-6.jpg';
+
+// Mock properties data (same as home page)
+const mockProperties = [
+  {
+    id: 'featured-1',
+    image: property1,
+    title: 'Modern City Apartment',
+    location: 'Bole, Addis Ababa',
+    price: 'ETB 2,400,000',
+    beds: 2,
+    baths: 1,
+    sqft: '1,100',
+    type: 'sale',
+    category: 'apartment',
+    city: 'Addis Ababa',
+  },
+  {
+    id: 'featured-2',
+    image: property2,
+    title: 'Charming Family Home',
+    location: 'Kazanchis, Addis Ababa',
+    price: 'ETB 4,850,000',
+    beds: 4,
+    baths: 3,
+    sqft: '2,800',
+    type: 'sale',
+    category: 'house',
+    city: 'Addis Ababa',
+  },
+  {
+    id: 'featured-3',
+    image: property3,
+    title: 'Luxury Condo Tower',
+    location: 'CMC, Addis Ababa',
+    price: 'ETB 12,500,000',
+    beds: 3,
+    baths: 2,
+    sqft: '1,950',
+    type: 'sale',
+    category: 'condo',
+    city: 'Addis Ababa',
+  },
+  {
+    id: 'featured-4',
+    image: property4,
+    title: 'Cozy Apartment',
+    location: 'Megenagna, Addis Ababa',
+    price: 'ETB 18,000',
+    beds: 3,
+    baths: 2,
+    sqft: '1,600',
+    type: 'rent',
+    category: 'apartment',
+    city: 'Addis Ababa',
+  },
+  {
+    id: 'featured-5',
+    image: property5,
+    title: 'Skyline Penthouse',
+    location: 'Sarbet, Addis Ababa',
+    price: 'ETB 32,000,000',
+    beds: 4,
+    baths: 3,
+    sqft: '3,500',
+    type: 'sale',
+    category: 'penthouse',
+    city: 'Addis Ababa',
+  },
+  {
+    id: 'featured-6',
+    image: property6,
+    title: 'Mediterranean Villa',
+    location: 'Old Airport, Addis Ababa',
+    price: 'ETB 28,000,000',
+    beds: 5,
+    baths: 4,
+    sqft: '4,200',
+    type: 'sale',
+    category: 'villa',
+    city: 'Addis Ababa',
+  },
+];
 
 const PropertiesList = () => {
   const [properties, setProperties] = useState([]);
@@ -51,7 +139,100 @@ const PropertiesList = () => {
     setError('');
     
     try {
-      // Build query params
+      // TODO: Replace with real API call when backend has properties
+      // For now, use mock data and apply filters locally
+      
+      let filteredProperties = [...mockProperties];
+
+      // Apply search filter
+      if (filters.search) {
+        const searchLower = filters.search.toLowerCase();
+        filteredProperties = filteredProperties.filter(p => 
+          p.title.toLowerCase().includes(searchLower) ||
+          p.location.toLowerCase().includes(searchLower)
+        );
+      }
+
+      // Apply category filter
+      if (filters.category) {
+        filteredProperties = filteredProperties.filter(p => 
+          p.category === filters.category
+        );
+      }
+
+      // Apply type filter
+      if (filters.type) {
+        filteredProperties = filteredProperties.filter(p => 
+          p.type === filters.type
+        );
+      }
+
+      // Apply city filter
+      if (filters.city) {
+        filteredProperties = filteredProperties.filter(p => 
+          p.city === filters.city
+        );
+      }
+
+      // Apply bedrooms filter
+      if (filters.bedrooms) {
+        filteredProperties = filteredProperties.filter(p => 
+          p.beds >= parseInt(filters.bedrooms)
+        );
+      }
+
+      // Apply bathrooms filter
+      if (filters.bathrooms) {
+        filteredProperties = filteredProperties.filter(p => 
+          p.baths >= parseInt(filters.bathrooms)
+        );
+      }
+
+      // Apply sorting
+      if (filters.sortBy === 'price_asc') {
+        filteredProperties.sort((a, b) => {
+          const priceA = parseInt(a.price.replace(/[^0-9]/g, ''));
+          const priceB = parseInt(b.price.replace(/[^0-9]/g, ''));
+          return priceA - priceB;
+        });
+      } else if (filters.sortBy === 'price_desc') {
+        filteredProperties.sort((a, b) => {
+          const priceA = parseInt(a.price.replace(/[^0-9]/g, ''));
+          const priceB = parseInt(b.price.replace(/[^0-9]/g, ''));
+          return priceB - priceA;
+        });
+      } else if (filters.sortBy === 'area_asc') {
+        filteredProperties.sort((a, b) => {
+          const areaA = parseInt(a.sqft.replace(/[^0-9]/g, ''));
+          const areaB = parseInt(b.sqft.replace(/[^0-9]/g, ''));
+          return areaA - areaB;
+        });
+      } else if (filters.sortBy === 'area_desc') {
+        filteredProperties.sort((a, b) => {
+          const areaA = parseInt(a.sqft.replace(/[^0-9]/g, ''));
+          const areaB = parseInt(b.sqft.replace(/[^0-9]/g, ''));
+          return areaB - areaA;
+        });
+      }
+
+      // Simulate pagination
+      const total = filteredProperties.length;
+      const pages = Math.ceil(total / filters.limit);
+      const startIndex = (filters.page - 1) * filters.limit;
+      const endIndex = startIndex + filters.limit;
+      const paginatedProperties = filteredProperties.slice(startIndex, endIndex);
+
+      setProperties(paginatedProperties);
+      setPagination({
+        page: filters.page,
+        pages: pages,
+        total: total,
+        hasNext: filters.page < pages,
+        hasPrev: filters.page > 1,
+      });
+
+      // Uncomment below when backend has real properties
+      /*
       const params = {};
       Object.keys(filters).forEach(key => {
         if (filters[key] !== '' && filters[key] !== false) {
@@ -62,6 +243,7 @@ const PropertiesList = () => {
       const response = await getProperties(params);
       setProperties(response.data || []);
       setPagination(response.pagination || {});
+      */
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to load properties');
     } finally {
@@ -231,17 +413,16 @@ const PropertiesList = () => {
                 }>
                   {properties.map((property) => (
                     <PropertyCard
-                      key={property._id}
-                      image={property.images[0]?.filename 
-                        ? `http://localhost:5000/uploads/${property.images[0].filename}`
-                        : '/placeholder-property.jpg'}
+                      key={property.id}
+                      id={property.id}
+                      image={property.image}
                       title={property.title}
-                      location={`${property.location.subcity}, ${property.location.city}`}
-                      price={`ETB ${property.price.toLocaleString()}`}
-                      beds={property.features.bedrooms || 0}
-                      baths={property.features.bathrooms || 0}
-                      sqft={property.area.size.toLocaleString()}
-                      type={property.category.includes('sale') ? 'sale' : 'rent'}
+                      location={property.location}
+                      price={property.price}
+                      beds={property.beds}
+                      baths={property.baths}
+                      sqft={property.sqft}
+                      type={property.type}
                     />
                   ))}
                 </div>
