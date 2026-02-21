@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import PropertiesList from './pages/PropertiesList';
+import PropertyDetails from './pages/PropertyDetails';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/properties" element={<PropertiesList />} />
+            <Route path="/properties/:id" element={<PropertyDetails />} />
             <Route 
               path="/dashboard" 
               element={
