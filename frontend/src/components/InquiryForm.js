@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { X } from 'lucide-react';
-import { createInquiry } from '../services/inquiryService';
+import { sendInquiry } from '../services/inquiryService';
 
 const InquiryForm = ({ isOpen, onClose, propertyId, propertyTitle }) => {
   const [formData, setFormData] = useState({
@@ -24,7 +24,7 @@ const InquiryForm = ({ isOpen, onClose, propertyId, propertyTitle }) => {
     setError('');
 
     try {
-      await createInquiry({
+      await sendInquiry({
         property: propertyId,
         message: formData.message,
         phoneNumber: formData.phoneNumber,
