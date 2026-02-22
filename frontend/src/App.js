@@ -10,6 +10,7 @@ import Dashboard from './pages/Dashboard';
 import PropertiesList from './pages/PropertiesList';
 import PropertyDetails from './pages/PropertyDetails';
 import AddProperty from './pages/AddProperty';
+import EditProperty from './pages/EditProperty';
 import MyProperties from './pages/MyProperties';
 import Inquiries from './pages/Inquiries';
 import Profile from './pages/Profile';
@@ -39,6 +40,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <AddProperty />
+                </PrivateRoute>
+              } 
+            />
+            <Route 
+              path="/properties/:id/edit" 
+              element={
+                <PrivateRoute>
+                  <EditProperty />
                 </PrivateRoute>
               } 
             />
