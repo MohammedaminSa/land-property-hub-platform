@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import PrivateRoute from './components/PrivateRoute';
+import AdminRoute from './components/AdminRoute';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -14,6 +15,9 @@ import EditProperty from './pages/EditProperty';
 import MyProperties from './pages/MyProperties';
 import Inquiries from './pages/Inquiries';
 import Profile from './pages/Profile';
+import AdminDashboard from './pages/AdminDashboard';
+import AdminUsers from './pages/AdminUsers';
+import AdminProperties from './pages/AdminProperties';
 
 function App() {
   return (
@@ -73,6 +77,30 @@ function App() {
                 <PrivateRoute>
                   <Profile />
                 </PrivateRoute>
+              } 
+            />
+            <Route 
+              path="/admin" 
+              element={
+                <AdminRoute>
+                  <AdminDashboard />
+                </AdminRoute>
+              } 
+            />
+            <Route 
+              path="/admin/users" 
+              element={
+                <AdminRoute>
+                  <AdminUsers />
+                </AdminRoute>
+              } 
+            />
+            <Route 
+              path="/admin/properties" 
+              element={
+                <AdminRoute>
+                  <AdminProperties />
+                </AdminRoute>
               } 
             />
           </Routes>
