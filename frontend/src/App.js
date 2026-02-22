@@ -12,6 +12,7 @@ import PropertyDetails from './pages/PropertyDetails';
 import AddProperty from './pages/AddProperty';
 import MyProperties from './pages/MyProperties';
 import Inquiries from './pages/Inquiries';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -54,6 +55,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <Inquiries />
+                </PrivateRoute>
+              } 
+            />
+            <Route 
+              path="/profile" 
+              element={
+                <PrivateRoute>
+                  <Profile />
                 </PrivateRoute>
               } 
             />
